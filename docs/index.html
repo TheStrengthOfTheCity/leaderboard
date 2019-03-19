@@ -1,14 +1,50 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Leaderboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
-</head>
-<body>
-    <h1>Hello World!</h1>
-</body>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="lib/angular.min.js"></script>
+
+    <script src="js/app.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/tables-min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <title>Angular App Demo</title>
+  </head>
+
+  <body ng-app="leaderboard" ng-controller="Main as vm">
+    <div id="wrapper">
+
+        <header>
+          <h1>{{vm.title}}</h1>
+        </header>
+
+        <table class="pure-table pure-table-horizontal pure-table-striped" ng-model="vm.scores">
+          <thead>
+            <tr>
+              <th>Rank: </th>
+              <th>Name: </th>
+              <th>Event: </th>
+              <th>Activity: </th>
+              <th>Score: </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="score in vm.scores">
+              <td> {{$index + 1}} </td>
+              <td> {{score.subject}} </td>
+              <td> {{score.event}} </td>
+              <td> {{score.activity}} </td>
+              <td> {{score.score}} </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </body>
+
 </html>
