@@ -28,10 +28,19 @@
           <fieldset>
             <legend>Filters</legend>
 
-            <input class="pure-input-1-3" type="text" placeholder="Filter By Name" ng-model="filterField.subject">
-            <input class="pure-input-1-3" type="text" placeholder="Filter By Event" ng-model="filterField.event">
-            <input class="pure-input-1-3" type="text" placeholder="Filter By Activity" ng-model="filterField.activity">
+            <label for="events">Events</label>
+            <select class="pure-input-1-4" id="events" ng-model="filterField.event">
+              <option value="{{undefined}}">--</option>
+              <option ng-repeat="event in vm.events">{{event}}</option>
+            </select>
 
+            <label for="activities">Activities</label>
+            <select class="pure-input-1-4" id="activities" ng-model="filterField.activity">
+                <option value="{{undefined}}">--</option>
+                <option ng-repeat="activity in vm.activities">{{activity}}</option>
+            </select>
+            
+            <input class="pure-input-1-3" type="text" placeholder="Filter By Name" ng-model="filterField.subject">
           </fieldset>
         </form>
 

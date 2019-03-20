@@ -1,3 +1,3 @@
 {
-    "endpoint": "https://leaderboarddb.herokuapp.com/v1/"
+    "base": "https://leaderboarddb.herokuapp.com/v1/"
 }

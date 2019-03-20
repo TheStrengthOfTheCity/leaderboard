@@ -19,7 +19,7 @@
             events: [],
             activities: [],
             scores: [],
-            endpoint: '',
+            base: '',
             sortColumn: '',
             reverseSort: false
         });
@@ -36,24 +36,10 @@
 
             return '';
         }
-
-        vm.setEndpoint = async function() {
+        
+        vm.getData = async function (endpoint) {
             return new Promise ((resolve, reject) => {
-                $http.get('config.json')
-                .then(
-                    function success (response) { resolve(response.data.endpoint); },
-                    function failure (err) {console.error(err); return ''; }
-                );
-            });
-        }
-
-        vm.getEvents = async function () {
-            
-        }
-
-        vm.getData = async function () {
-            return new Promise ((resolve, reject) => {
-                $http.get(vm.endpoint + 'observations/?score=true')
+                $http.get(vm.base + endpoint)
                 .then(
                     function success(response) { resolve(response.data); }, 
                     function failure(err) { console.error(err); }
@@ -61,8 +47,8 @@
             });
         }
 
-        vm.updateData = async function () {
-            vm.getData()
+        vm.updateScores = function () {
+            vm.getData('observations/?score=true')
             .then((data) => {
                 
                 for (var i = 0; i < data.length; i++) {
@@ -76,20 +62,53 @@
             });
         }
 
-        vm.run = function () {
-            vm.setEndpoint()
-            .then ((endpoint) => {
-                vm.endpoint = endpoint;
-                
-                vm.updateData();
-                vm.updateData();
+        vm.refresh = function () {
+            vm.updateScores();
 
-                setInterval(vm.updateData, 4000);
-            });
-
-            vm.getEvents()
+            vm.getData('events/')
             .then((events) => {
+                for (var i = 0; i < events.length; i++) {
+                    if (vm.events.includes(events[i].name) == false)
+                        vm.events.push(events[i].name);
+                }
+            })
+            .catch((err) => { console.error(err); });
 
+            vm.getData('activities/')
+            .then((activities) => {
+                for (var i = 0; i < activities.length; i++) {
+                    if (vm.activities.includes(activities[i].name) == false)
+                        vm.activities.push(activities[i].name);
+                }
+            })
+            .catch((err) => { console.error(err); });
+        }
+
+        vm.run = function () {
+            vm.getData('config.json')
+            .then ((data) => {
+                vm.base = data.base;
+
+                vm.updateScores();
+                vm.updateScores();
+
+                vm.getData('events/')
+                .then((events) => {
+                    for (var i = 0; i < events.length; i++) {
+                        vm.events.push(events[i].name);
+                    }
+                })
+                .catch((err) => { console.error(err); });
+
+                vm.getData('activities/')
+                .then((activities) => {
+                    for (var i = 0; i < activities.length; i++) {
+                        vm.activities.push(activities[i].name);
+                    }
+                })
+                .catch((err) => { console.error(err); });
+
+                setInterval(vm.refresh, 5000);
             });
         }
 
