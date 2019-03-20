@@ -69,6 +69,10 @@ table th {
     display: block;
   }
 
+  label {
+    display: block;
+  }
+
   #name {
     width: 100%;
     display: block;
