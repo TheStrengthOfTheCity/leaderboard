@@ -64,24 +64,6 @@
 
         vm.refresh = function () {
             vm.updateScores();
-
-            vm.getData('events/')
-            .then((events) => {
-                for (var i = 0; i < events.length; i++) {
-                    if (vm.events.includes(events[i].name) == false)
-                        vm.events.push(events[i].name);
-                }
-            })
-            .catch((err) => { console.error(err); });
-
-            vm.getData('activities/')
-            .then((activities) => {
-                for (var i = 0; i < activities.length; i++) {
-                    if (vm.activities.includes(activities[i].name) == false)
-                        vm.activities.push(activities[i].name);
-                }
-            })
-            .catch((err) => { console.error(err); });
         }
 
         vm.run = function () {
