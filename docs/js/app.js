@@ -17,10 +17,25 @@
         var vm = angular.extend(this, {
             title: 'The Strength Of The City',
             scores: [],
-            endpoint: ''
+            endpoint: '',
+            sortColumn: '',
+            reverseSort: false
         });
 
-        var setEndpoint = async function() {
+        vm.sortData = function (column) {
+            vm.reverseSort = (vm.sortColumn == column) ? !vm.reverseSort : false;
+            vm.sortColumn = column;
+        }
+
+        vm.getSortClass = function (column) {
+            if (vm.sortColumn == column) {
+                return vm.reverseSort ? 'arrowDown' : 'arrowUp';
+            }
+
+            return '';
+        }
+
+        vm.setEndpoint = async function() {
             return new Promise ((resolve, reject) => {
                 $http.get('config.json')
                 .then(
@@ -30,7 +45,7 @@
             });
         }
 
-        var getData = async function () {
+        vm.getData = async function () {
             return new Promise ((resolve, reject) => {
                 $http.get(vm.endpoint + 'observations/?score=true')
                 .then(
@@ -40,9 +55,14 @@
             });
         }
 
-        var updateData = async function () {
-            getData()
+        vm.updateData = async function () {
+            vm.getData()
             .then((data) => {
+                
+                for (var i = 0; i < data.length; i++) {
+                    data[i].score = parseFloat(data[i].score);
+                }
+
                 vm.scores = data;
             })
             .catch((err) => {
@@ -50,18 +70,18 @@
             });
         }
 
-        var run = function () {
-            setEndpoint()
+        vm.run = function () {
+            vm.setEndpoint()
             .then ((endpoint) => {
                 vm.endpoint = endpoint;
                 
-                updateData();
-                updateData();
+                vm.updateData();
+                vm.updateData();
 
-                setInterval(updateData, 4000);
+                setInterval(vm.updateData, 4000);
             });
         }
 
-        run();
+        vm.run();
     }
 })();

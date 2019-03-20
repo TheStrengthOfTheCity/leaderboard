@@ -23,24 +23,21 @@
         <header>
           <h1>{{vm.title}}</h1>
         </header>
-
         <table class="pure-table pure-table-horizontal pure-table-striped" ng-model="vm.scores">
           <thead>
             <tr>
-              <th>Rank: </th>
-              <th>Name: </th>
-              <th>Event: </th>
-              <th>Activity: </th>
-              <th>Score: </th>
+              <th ng-click="vm.sortData('subject')">Name: <div ng-class="vm.getSortClass('subject')"></div></th>
+              <th ng-click="vm.sortData('event')">Event: <div ng-class="vm.getSortClass('event')"></div></th>
+              <th ng-click="vm.sortData('activity')">Activity: <div ng-class="vm.getSortClass('activity')"></div></th>
+              <th ng-click="vm.sortData('score')">Score: <div ng-class="vm.getSortClass('score')"></div></th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="score in vm.scores">
-              <td> {{$index + 1}} </td>
-              <td> {{score.subject}} </td>
-              <td> {{score.event}} </td>
-              <td> {{score.activity}} </td>
-              <td> {{score.score}} </td>
+            <tr ng-repeat="x in vm.scores | orderBy:vm.sortColumn:vm.reverseSort">
+              <td> {{x.subject}} </td>
+              <td> {{x.event}} </td>
+              <td> {{x.activity}} </td>
+              <td> {{x.score}} </td>
             </tr>
           </tbody>
         </table>
