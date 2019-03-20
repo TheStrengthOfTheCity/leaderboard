@@ -16,6 +16,8 @@
 
         var vm = angular.extend(this, {
             title: 'The Strength Of The City',
+            events: [],
+            activities: [],
             scores: [],
             endpoint: '',
             sortColumn: '',
@@ -43,6 +45,10 @@
                     function failure (err) {console.error(err); return ''; }
                 );
             });
+        }
+
+        vm.getEvents = async function () {
+            
         }
 
         vm.getData = async function () {
@@ -79,6 +85,11 @@
                 vm.updateData();
 
                 setInterval(vm.updateData, 4000);
+            });
+
+            vm.getEvents()
+            .then((events) => {
+
             });
         }
 
