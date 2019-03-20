@@ -48,6 +48,7 @@
         <table class="pure-table pure-table-horizontal pure-table-striped" ng-model="vm.scores">
           <thead>
             <tr>
+                <th ng-click="vm.sortData('rank')">Rank: <div ng-class="vm.getSortClass('rank')"></div></th>
               <th ng-click="vm.sortData('subject')">Name: <div ng-class="vm.getSortClass('subject')"></div></th>
               <th ng-click="vm.sortData('event')">Event: <div ng-class="vm.getSortClass('event')"></div></th>
               <th ng-click="vm.sortData('activity')">Activity: <div ng-class="vm.getSortClass('activity')"></div></th>
@@ -56,6 +57,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="score in vm.scores | orderBy: vm.sortColumn: vm.reverseSort | filter: filterField">
+              <td> {{score.rank}} </td>
               <td> {{score.subject}} </td>
               <td> {{score.event}} </td>
               <td> {{score.activity}} </td>

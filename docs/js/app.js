@@ -89,6 +89,8 @@
             .then ((data) => {
                 vm.base = data.base;
 
+                vm.sortColumn = 'rank';
+
                 vm.updateScores();
                 vm.updateScores();
 
@@ -108,7 +110,7 @@
                 })
                 .catch((err) => { console.error(err); });
 
-                setInterval(vm.refresh, 5000);
+                setInterval(vm.refresh, 3000);
             });
         }
 
