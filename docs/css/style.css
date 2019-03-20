@@ -25,9 +25,6 @@ header h1 {
 }
 
 table {
-  margin-left: auto;
-  margin-right: auto;
-
   width: 100%;
 }
 
@@ -55,4 +52,29 @@ table th {
   border-top: 5px solid black;
 
   display: inline-block;
+}
+
+@media only screen and (max-width: 600px) {
+  header {
+    font-size: 25px;
+  }
+
+  #events {
+    width: 100%;
+    display: block;
+  }
+
+  #activities {
+    width: 100%;
+    display: block;
+  }
+
+  #name {
+    width: 100%;
+    display: block;
+  }
+
+  #wrapper {
+    width: 100%;
+  }
 }
